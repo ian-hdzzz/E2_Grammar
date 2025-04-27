@@ -297,10 +297,10 @@ Once you run the programm there would be 2 options, either you can check the tes
 ### Correct sentences trees 
 Here are some trees from the correct sentences above:
 
-<img width="520" alt="tree" src="./img/one.png">
-<img width="520" alt="tree" src="./img/two.png">
-<img width="520" alt="tree" src="./img/three.png">
-<img width="520" alt="tree" src="./img/four.png">
+<img width="620" alt="tree" src="./img/one.png">
+<img width="620" alt="tree" src="./img/two.png">
+<img width="620" alt="tree" src="./img/three.png">
+<img width="620" alt="tree" src="./img/four.png">
 
 ## Analysis
 ### Complexity 
