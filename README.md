@@ -14,11 +14,11 @@ Our grammar focuses on several key elements of English:
 
 Our grammar emphasizes syntactic structure and the relationship between different sentence components.
 ### Plural rules
-To better understand how to form the two different types of plural in English, here are the basic rules for each:
+To better understand we'll be using just this two rules for plural and singular in english:
 
-a. When the subject is singular, the verb is conjugated with an “s” at the end in the present tense. For example: Thor runs.
+* When the subject is singular, the verb is conjugated with an “s” at the end in the present tense. For example: Thor runs.
 
-b. When the subject is plural (composed of two or more subjects), the verb is used in its base form, without the “s”. For example: Thor and Loki run.
+* When the subject is plural (composed of two or more subjects), the verb is used in its base form, without the “s”. For example: Thor and Loki run.
 
 ## Model
 Before generating the grammar, here are the words that we'll be using:
@@ -61,7 +61,7 @@ Before generating the grammar, here are the words that we'll be using:
 * create
 * use
 
-### Determinantes (DET)* 
+### Determinantes (DET)
 * the
 * a
 * an
@@ -74,7 +74,7 @@ Before generating the grammar, here are the words that we'll be using:
 * but
 * because
 
-### Preposiciones (P)
+### Preposiciones (PP)
 * in
 * on
 * with
@@ -268,11 +268,11 @@ The final grammar is now free from ambiguity and left recursion, making it suita
     ADJ -> 'powerful' | 'amazing' | 'strong' | 'intelligent' | 'brave' | 'magical' | 'dangerous' | 'evil'
 ```
 ## Implementation + Testing
-Now that we have our gammar complete let's test it. We'll be working with Google Collabs, so it'll be easier and faster to test the grammar. 
+Now that we have our gammar complete let's test it. We'll be using Natural Language Toolkit (NLTK) library and working with Google Collabs, so it'll be easier and faster to test the grammar. 
 You can just click in here,and it'll take you to the grammar test:
 https://colab.research.google.com/drive/1jt0X6AN-sp-hcW53P4pgKN7fI8Luc1pu?usp=sharing 
 
-Another way to do it would be using: Natural Language Toolkit (NLTK). If that's the case, follow the next steps: install python (if you don't have it yet) from python.org, clone the repository, navigate to the directory that contains the .py file. Install NLTK by running "pip install nltk" or "brew install python-nltk" (if you're on mac), in your console. Then run the program using the command: python english_grammar.py.
+Another way to do it would be running the .py file in your computer: If that's the case, follow the next steps: install python (if you don't have it yet) from python.org, clone the repository, navigate to the directory that contains the .py file. Install NLTK by running "pip install nltk" or "brew install python-nltk" (if you're on mac), in your console. Then run the program using the command: python english_grammar.py.
 
 ### Correct sentences
 Valid sentences in our grammar include:
@@ -297,10 +297,10 @@ Once you run the programm there would be 2 options, either you can check the tes
 ### Correct sentences trees 
 Here are some trees from the correct sentences above:
 
-<img width="250" alt="tree" src="./img/one.png">
-<img width="250" alt="tree" src="./img/two.png">
-<img width="250" alt="tree" src="./img/three.png">
-<img width="250" alt="tree" src="./img/four.png">
+<img width="520" alt="tree" src="./img/one.png">
+<img width="520" alt="tree" src="./img/two.png">
+<img width="520" alt="tree" src="./img/three.png">
+<img width="520" alt="tree" src="./img/four.png">
 
 ## Analysis
 ### Complexity 
