@@ -3,31 +3,28 @@ from nltk import CFG, ChartParser
 import sys
 import re
 
-# Definition of the superhero grammar with lowercase tokens
+# Definition of the superhero grammar with the updated structure
 grammar_text = """
 # Syntactic rules
-    S -> NP_SG VP_SG S_PRIME #Singular subject with singular verb
-    S -> NP_PL VP_PL S_PRIME #Plural subject with plural verb
+    S -> NP_SG V_SG S_PRIME   
+    S -> NP_PL V_PL S_PRIME   
     S_PRIME -> CONJ S | 
 
-    # Singular noun phrases
+    # Rules for singular noun phrases
     NP_SG -> DET N | DET ADJ N | N
 
-    # Plural noun phrases
-    NP_PL -> NP_SG CONJ NP_SG
+    # Rules for plural noun phrases
+    NP_PL -> NP_SG CONJ NP_SG   
 
-    # Verb phrases for singular subject
-    VP_SG -> SV VP_PRIME_SG
+    # Rules for verb phrases 
+    V_SG -> V_S V_OPT | ADV V_S V_OPT        
+    V_OPT -> NP_SG PP | NP_SG | PP | ADV | 
 
-    # Verb phrases for plural subject
-    VP_PL -> PV VP_PRIME_PL
+    # Rules for verb phrases 
+    V_PL -> V_P V_OPT | ADV V_P V_OPT         
 
-    # Verb phrase continuation (objects, adverbs, prepositional phrases)
-    VP_PRIME_SG -> NP_SG VP_PRIME_SG | PP VP_PRIME_SG | NP_SG PP VP_PRIME_SG | ADV VP_PRIME_SG | 
-    VP_PRIME_PL -> NP_SG VP_PRIME_PL | PP VP_PRIME_PL | NP_SG PP VP_PRIME_PL | ADV VP_PRIME_PL | 
-
-    # Prepositional phrases
-    PP -> PREP NP_SG
+    # Rule for prepositional phrases
+    PP -> PREP NP_SG | PREP NP_PL
 
     # Lexical categories
     # Superheroes and villains (N)
@@ -37,11 +34,11 @@ grammar_text = """
     # Objects (N)
     N -> 'shield' | 'hammer' | 'suit' | 'web' | 'portal' | 'stone' | 'city' | 'universe'
 
-    # Singular Verbs (SV) - verbs with 's'
-    SV -> 'fights' | 'saves' | 'protects' | 'defeats' | 'flies' | 'shoots' | 'throws' | 'builds' | 'creates' | 'uses'
+    # Singular Verbs (V_S) - verbs with 's'
+    V_S -> 'fights' | 'saves' | 'protects' | 'defeats' | 'flies' | 'shoots' | 'throws' | 'builds' | 'creates' | 'uses'
 
-    # Plural Verbs (PV) - base form verbs
-    PV -> 'fight' | 'save' | 'protect' | 'defeat' | 'fly' | 'shoot' | 'throw' | 'build' | 'create' | 'use'
+    # Plural Verbs (V_P) - base form verbs
+    V_P -> 'fight' | 'save' | 'protect' | 'defeat' | 'fly' | 'shoot' | 'throw' | 'build' | 'create' | 'use'
 
     # Determiners (DET)
     DET -> 'the' | 'a' | 'an' | 'this' | 'that'
