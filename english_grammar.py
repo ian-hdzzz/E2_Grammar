@@ -1,27 +1,30 @@
 import nltk
 from nltk import CFG, ChartParser
 import sys
-import re
 
 # Definition of the superhero grammar with the updated structure
 grammar_text = """
-# Syntactic rules
+    # Syntactic rules
     S -> NP_SG V_SG S_PRIME   
     S -> NP_PL V_PL S_PRIME   
     S_PRIME -> CONJ S | 
 
     # Rules for singular noun phrases
-    NP_SG -> DET N | DET ADJ N | N
+    NP_SG -> DET NP_SG_PRIME | N
+    NP_SG_PRIME -> ADJ N | N
 
     # Rules for plural noun phrases
     NP_PL -> NP_SG CONJ NP_SG   
 
     # Rules for verb phrases 
-    V_SG -> V_S V_OPT | ADV V_S V_OPT        
-    V_OPT -> NP_SG PP | NP_SG | PP | ADV | 
+    V_SG -> V_S V_OPT | ADV V_S V_OPT  
 
     # Rules for verb phrases 
     V_PL -> V_P V_OPT | ADV V_P V_OPT         
+    
+    V_OPT -> NP_SG V_OPT_PRIME | PP | ADV | 
+    V_OPT_PRIME -> PP | 
+
 
     # Rule for prepositional phrases
     PP -> PREP NP_SG | PREP NP_PL

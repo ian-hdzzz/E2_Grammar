@@ -61,20 +61,20 @@ Before generating the grammar, here are the words that we'll be using:
 * create
 * use
 
-### Determinantes (DET)
+### Determiners (DET)
 * the
 * a
 * an
 * this
 * that
 
-### Conectores (CONJ)
+### Connectors (CONJ)
 * and
 * or
 * but
 * because
 
-### Preposiciones (PP)
+### Prepositions (PP)
 * in
 * on
 * with
@@ -82,13 +82,13 @@ Before generating the grammar, here are the words that we'll be using:
 * to
 * against
 
-### Adverbios (ADV)
+### Adverbs (ADV)
 * quickly
 * bravely
 * secretly
 * suddenly
 
-### Adjetivos (ADJ)
+### Adjetives (ADJ)
 * powerful
 * amazing
 * strong
@@ -149,30 +149,31 @@ Changes realized:
 4. Simplified prepositional phrase rules
 
 ```python
-# Rules for sentences
-S -> NP_SG V_SG S_PRIME   
-S -> NP_PL V_PL S_PRIME   
-S_PRIME -> CONJ S | ε     
+    # Rules for sentences
+    S -> NP_SG V_SG S_PRIME   
+    S -> NP_PL V_PL S_PRIME   
+    S_PRIME -> CONJ S | ε     
 
-# Rules for singular noun phrases
-NP_SG -> DET N | DET ADJ N | N
+    # Rules for singular noun phrases
+    NP_SG -> DET NP_SG_PRIME | N
+    NP_SG_PRIME -> ADJ N | N
 
-# Rules for plural noun phrases
-NP_PL -> NP_SG CONJ NP_SG   
+    # Rules for plural noun phrases
+    NP_PL -> NP_SG CONJ NP_SG   
 
-# Rules for verb phrases - singular
-V_SG -> V_S V_EXT          
-V_EXT -> NP V_EXT_PRIME    
-V_EXT -> PP V_EXT_PRIME    
-V_EXT -> ADV V_EXT_PRIME   
-V_EXT -> ε                 
-V_EXT_PRIME -> PP | ε      
+    # Rules for verb phrases - singular
+    V_SG -> V_S V_EXT          
+    V_EXT -> NP V_EXT_PRIME    
+    V_EXT -> PP V_EXT_PRIME    
+    V_EXT -> ADV V_EXT_PRIME   
+    V_EXT -> ε                 
+    V_EXT_PRIME -> PP | ε      
 
-# Rules for verb phrases - plural 
-V_PL -> V_P V_EXT          
+    # Rules for verb phrases - plural 
+    V_PL -> V_P V_EXT          
 
-# Rule for prepositional phrases
-PP -> PREP NP_SG | PREP NP_PL
+    # Rule for prepositional phrases
+    PP -> PREP NP_SG | PREP NP_PL
 ```
 These changes ensure that sentences with conjunctions now have only one possible parse tree, eliminating ambiguity.
 
@@ -186,26 +187,30 @@ Left recursion creates significant problems for top-down parsers like LL(1) beca
 
 
 ``` python
-# Rule for a sentence
-S -> NP_SG V_SG S_PRIME   
-S -> NP_PL V_PL S_PRIME   
-S_PRIME -> CONJ S | ε     
+    # Rule for a sentence
+    S -> NP_SG V_SG S_PRIME   
+    S -> NP_PL V_PL S_PRIME   
+    S_PRIME -> CONJ S | ε   
 
-# Rules for singular noun phrases
-NP_SG -> DET N | DET ADJ N | N
+    # Rules for singular noun phrases
+    NP_SG -> DET NP_SG_PRIME | N
+    NP_SG_PRIME -> ADJ N | N
 
-# Rules for plural noun phrases
-NP_PL -> NP_SG CONJ NP_SG   
+    # Rules for plural noun phrases
+    NP_PL -> NP_SG CONJ NP_SG   
 
-# Rules for verb phrases 
-V_SG -> V_S V_OPT | ADV V_S V_OPT         
-V_OPT -> NP_SG PP | NP_SG | PP | ADV | ε
+    # Rules for verb phrases 
+    V_SG -> V_S V_OPT | ADV V_S V_OPT  
 
-# Rules for verb phrases 
-V_PL -> V_P V_OPT | ADV V_P V_OPT            
+    # Rules for verb phrases 
+    V_PL -> V_P V_OPT | ADV V_P V_OPT         
+    
+    V_OPT -> NP_SG V_OPT_PRIME | PP | ADV | 
+    V_OPT_PRIME -> PP | 
 
-# Rule for prepositional phrases
-PP -> PREP NP_SG | PREP NP_PL
+
+    # Rule for prepositional phrases
+    PP -> PREP NP_SG | PREP NP_PL
 ```
 Changes realized
 
@@ -223,17 +228,21 @@ The final grammar is now free from ambiguity and left recursion, making it suita
     S_PRIME -> CONJ S | 
 
     # Rules for singular noun phrases
-    NP_SG -> DET N | DET ADJ N | N
+    NP_SG -> DET NP_SG_PRIME | N
+    NP_SG_PRIME -> N | ADJ N
 
     # Rules for plural noun phrases
     NP_PL -> NP_SG CONJ NP_SG   
 
     # Rules for verb phrases 
-    V_SG -> V_S V_OPT | ADV V_S V_OPT        
-    V_OPT -> NP_SG PP | NP_SG | PP | ADV | 
+    V_SG -> V_S V_OPT | ADV V_S V_OPT  
 
     # Rules for verb phrases 
     V_PL -> V_P V_OPT | ADV V_P V_OPT         
+    
+    V_OPT -> NP_SG V_OPT_PRIME | PP | ADV | 
+    V_OPT_PRIME -> PP | 
+
 
     # Rule for prepositional phrases
     PP -> PREP NP_SG | PREP NP_PL
